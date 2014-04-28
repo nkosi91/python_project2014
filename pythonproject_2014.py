@@ -88,7 +88,11 @@ def summary(alnfile):
                 menu()
         
 #for option 3
-#def slicer(startslice,endslice):
+def slicer(alnfile):
+        startslice=input("Enter start position ")
+        endslice=input("Enter end position ")
+        print "Segment from", startslice, "to", endslice, "of sequences"
+        
         
 
 #for option 4
@@ -97,22 +101,28 @@ def seqisolate(alnfile):
         seqinfo=read_aln_file(aln)[2][sequenceid]
         print "Sequence ID:",sequenceid
         seqlength=0
+        SEQ=""
         for char in seqinfo:
                 if char!="-":
                         seqlength=seqlength+1
+                        SEQ=SEQ+char
         print "Sequence length:",seqlength
         print "A:",seqinfo.count("A")
         print "T:",seqinfo.count("T")
         print "G:",seqinfo.count("G")
         print "C:",seqinfo.count("C")
-        print seqlength
+        for u in range(0,seqlength,60):
+                print SEQ[u:u+60]
+        print "*********************************************************************************"
         exitseqisolate=raw_input("Press enter to go to Menu or I to enter another sequence ID: ")
         if exitseqisolate==" ":
                 menu()
         elif exitseqisolate=="i" or exitseqisolate=="I":
                 seqisolate(alnfile)
 #for option 5
-#def glycosig():
+def glycosig(aln):
+        
+        
 #for option 6
 #def fastaexport():
 #for option 7
@@ -154,14 +164,14 @@ def menu():
                         global aln
                         summary(aln)
                 elif option==3:
-                        startslice=input("Enter start position ")
-                        endslice=input("Enter end position ")
-                        slicer(startslice,endslice)
+                        global aln
+                        slicer(aln)
                 elif option==4:
                         global aln
                         seqisolate(aln)
                 elif option==5:
-                        glycosig()
+                        global aln
+                        glycosig(aln)
                 elif option==6:
                         fastaexport()
                 elif option==7: 
