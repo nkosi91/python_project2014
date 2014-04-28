@@ -92,11 +92,29 @@ def summary(alnfile):
         
 
 #for option 4
-
+def seqisolate(alnfile):
+        sequenceid=raw_input("Please enter sequence to analyse: ")
+        seqinfo=read_aln_file(aln)[2][sequenceid]
+        print "Sequence ID:",sequenceid
+        seqlength=0
+        for char in seqinfo:
+                if char!="-":
+                        seqlength=seqlength+1
+        print "Sequence length:",seqlength
+        print "A:",seqinfo.count("A")
+        print "T:",seqinfo.count("T")
+        print "G:",seqinfo.count("G")
+        print "C:",seqinfo.count("C")
+        print seqlength
+        exitseqisolate=raw_input("Press enter to go to Menu or I to enter another sequence ID: ")
+        if exitseqisolate==" ":
+                menu()
+        elif exitseqisolate=="i" or exitseqisolate=="I":
+                seqisolate(alnfile)
 #for option 5
-
+#def glycosig():
 #for option 6
-def
+#def fastaexport():
 #for option 7
 def exitapp():
         confirm=raw_input("Are you sure you want to exit? Press Y to exit and N to continue ")
@@ -140,12 +158,12 @@ def menu():
                         endslice=input("Enter end position ")
                         slicer(startslice,endslice)
                 elif option==4:
-                        sequenceid=raw_input("Please enter sequence to analyse ")
-                        refresh=seqisolate()
+                        global aln
+                        seqisolate(aln)
                 elif option==5:
-                        refresh=glycosig()
+                        glycosig()
                 elif option==6:
-                        refresh=fastaexport()
+                        fastaexport()
                 elif option==7: 
                         refresh=exitapp()                                
                 else:
