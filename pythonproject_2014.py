@@ -17,11 +17,14 @@ def read_aln_file(alnfile):
                 for line in lines:#isolating matches, with their spaces
                         if line.startswith("CLUSTAL"):
                                 continue
+                        spaceind=0
                         if line.startswith("gi|"):
-                                continue
+                                while spaceind==0:
+                                        spaceindex=line.rindex(" ")
+                                        spaceind=spaceind+spaceindex
                         else:
-                                matches=matches+line
-                                matches=str(matches)
+                                matches=matches+line[spaceind:-1].strip("\n")
+                        
                 store=[]
                 for item in seq:
                         if item=="":#removing the spaces from the list
@@ -58,10 +61,11 @@ def read_aln_file(alnfile):
                                 seqs_only=seqs_only+seqsonly[c]
                         seqs_only=seqs_only.split()
                         seqdict[seqs_only[0]]=seqs_only[1]
-                return (aln,sequencenumber,seqdict,store,matches)
+                seqdict["Sequence Identity or Matches    "]=matches
+                return (aln,sequencenumber,seqdict,store)
         else:           
                 message="File might not be a valid fasta file, please enter a valid aln file"
-                refresh=0
+                menu()
         menu()
 
 #for option 2
@@ -100,11 +104,10 @@ def summary(alnfile):
 def slicer(alnfile):
         startslice=input("Enter start position ")
         endslice=input("Enter end position ")
-        print "Segment from",startslice-1,"to",endslice-1,"of sequences\n"
+        print "Segment from",startslice,"to",endslice,"of sequences\n"
         for k in read_aln_file(aln)[2].keys():
-                print k,
-                print read_aln_file(aln)[2][k][startslice-1:endslice-1]
-        print read_aln_file(aln)[4][startslice-1:endslice-1]
+                print k,":",
+                print read_aln_file(aln)[2][k][startslice-1:endslice-1].strip("\n")
         exitslice=raw_input("Press [enter] to display the menu again or E to select other segment: ")
         if exitslice==" ":
                 menu()
@@ -135,7 +138,61 @@ def seqisolate(alnfile):
         elif exitseqisolate=="i" or exitseqisolate=="I":
                 seqisolate(alnfile)
 #for option 5
-#def glycosig(aln):
+def glycosig(aln):
+        protdict={}
+        for key,val in read_aln_file(aln)[2].items():
+                protdict[key]=""
+                rangelist=range(0,len(val),3)
+                for r in rangelist:
+                        aa=read_aln_file(aln)[2][key][r:r+3]
+                        if aa=="ATG":
+                                codon="M"                           
+                        if aa=="ATT" or aa=="ATC" or aa=="ATA":
+                                codon="I"                
+                        if aa=="CTT" or aa=="CTC" or aa=="CTA" or aa=="CTG" or aa=="TTA" or aa=="TTG":
+                                codon="L"                
+                        if aa=="GTT" or aa=="GTC" or aa=="GTA" or aa=="GTG":
+                                codon="V"                 
+                        if aa=="TTT" or aa=="TTC":
+                                codon="F"                
+                        if aa=="TGT" or aa=="TGC":
+                                codon="C"                
+                        if aa=="GCT" or aa=="GCG" or aa=="GCA" or aa=="GCC":
+                                codon="A"               
+                        if aa=="GGT" or aa=="GGC" or aa=="GGA" or aa=="GGG":
+                                codon="G"
+                        if aa=="CCT" or aa=="CCC" or aa=="CCA" or aa=="CCG":
+                                codon="P"
+                        if aa=="ACT" or aa=="ACC" or aa=="ACA" or aa=="ACG":
+                                codon="T"
+                        if aa=="TCT" or aa=="TCC" or aa=="TCA" or aa=="TCG" or aa=="AGT" or aa=="AGC":
+                                codon="S"
+                        if aa=="TAT" or aa=="TAC":
+                                codon="Y"
+                        if aa=="TGG":
+                                codon="W"
+                        if aa=="CAG" or aa=="CAA":
+                                codon="Q"
+                        if aa=="AAT" or aa=="AAC":
+                                codon="N"
+                        if aa=="CAT" or aa=="CAC":
+                                codon="H"
+                        if aa=="GAA" or aa=="GAG":
+                                codon="E"
+                        if aa=="GAT" or aa=="GAG":
+                                codon="D"
+                        if aa=="AAA" or aa=="AAG":
+                                codon="K"
+                        if aa=="CGT" or aa=="CGC" or aa=="CGA" or aa=="CGG" or aa=="AGA" or aa=="AGG":
+                                codon="R"
+                        if aa=="TAG" or aa=="TAA" or aa=="TGA":
+                                codon="*stop*" 
+                        protdict[key]=protdict[key]+codon
+        print protdict 
+        
+        exitglysig=raw_input("Press enter for menu ")
+        if exitglysig==" ":
+                menu()
         
         
 #for option 6
