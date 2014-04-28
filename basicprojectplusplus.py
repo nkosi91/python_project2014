@@ -1,71 +1,42 @@
 #for option 1
 def read_aln_file(alnfile):
-        aln=open(alnfile, "r")#opening the aln file
+        aln=open(alnfile, "r")
         aln.seek(0,0)
-        if alnfile.endswith(".aln"):#checking if extension is correst
+        if alnfile.endswith(".aln"):
                 lines=aln.readlines()
                 aln.close()
-        if lines[0].startswith("CLUSTAL"):#checking if it is a valid clustal file
+        if lines[0].startswith("CLUSTAL"):
                 header=lines[0]
                 print header
-                seq=[]#making a list of everything found in the document
+                seq=[]
                 for line in lines:
-                        if line.startswith("CLUSTAL"):#excluding the header in the list
+                        if line.startswith("CLUSTAL"):
                                 continue
                         else:
-                                nline=line.strip()#removing "next lines" in the list
+                                nline=line.strip()
                                 seq=seq+[nline]                               
                 print seq                
                 store=[]
                 for item in seq:
-                        if item=="":#removing the spaces from the list
+                        if item=="":
                                 continue
                         else:
-                                store=store+[item]#file content with the ids, seqs and matches
+                                store=store+[item]
                 print "store==", store
-                seqidsseq=[]
-                for seqid in store:#removing the matches leaving the ids and sequences                                      
-                        if seqid.startswith("gi|"):
-                                seqidsseq=seqidsseq+[seqid]               
-                print "seqidsseq==", seqidsseq
-                n=0
-                for each in store:#finding the number of sequences
-                        if each.startswith("*"):
-                                while n==0:
-                                        sequencenumber=store.index(each)
-                                        n=1
-                print "There are", sequencenumber,"sequences"
                 seqids=[]
-                for each in seqidsseq:#Making a list with either seqs or seqids
-                        seqids=seqids+each.split()
-                print seqids
-                seqidsonly=[]
-                for j in range(0,len(seqids),2):#isolating sequence ids
-                        seqidsonly=seqidsonly+[seqids[j]]
-                print seqidsonly
-                seqsonly=[]
-                for i in range(1,len(seqids),2):#isolating sequences
-                        seqsonly=seqsonly+[seqids[i]]
-                print seqsonly
-                print len(seqsonly)
-                print len(seqidsonly)
-                lengths=[]
-                for fragment in seqsonly:
-                        fraglen=len(fragment)
-                        lengths=lengths+[fraglen]
-                print lengths
-                seqids_only=seqidsonly[0:sequencenumber]#narrowing down, eliminating repitition
-                print seqids_only
-                seqdict={}
-                for o in range(0,sequencenumber):
-                        seqs_only=seqids_only[o]+" "
-                        print seqids_only[o]                        
-                        for c in range(o,len(seqsonly),sequencenumber):
-                                seqs_only=seqs_only+seqsonly[c]
-                        seqs_only=seqs_only.split()
-                        print seqs_only
-                        seqdict[seqs_only[0]]=seqs_only[1]
-                return seqdict
+                for seqid in store:                                        
+                        if seqid.startswith("gi|"):
+                                seqids=seqids+[seqid]               
+                print "seqids==", seqids
+                indices=[]
+                for Seqid in seqids:
+                        ind=Seqid.index(" ")
+                        indices=indices+[ind]
+                print "indices==", ind
+                        #if line.startswith("gi|") or line.startswith(" "):
+                                
+                                #return 0  
+                
         else:           
                 message="File might not be a valid fasta file, please enter a valid aln file"
                 return 0
