@@ -61,8 +61,7 @@ def read_aln_file(alnfile):
                                 seqs_only=seqs_only+seqsonly[c]
                         seqs_only=seqs_only.split()
                         seqdict[seqs_only[0]]=seqs_only[1]
-                seqdict["Sequence Identity or Matches    "]=matches
-                return (aln,sequencenumber,seqdict,store)
+                return (aln,sequencenumber,seqdict,store,matches)
         else:           
                 message="File might not be a valid fasta file, please enter a valid aln file"
                 menu()
@@ -107,7 +106,9 @@ def slicer(alnfile):
         print "Segment from",startslice,"to",endslice,"of sequences\n"
         for k in read_aln_file(aln)[2].keys():
                 print k,":",
-                print read_aln_file(aln)[2][k][startslice-1:endslice-1].strip("\n")
+                print read_aln_file(aln)[2][k][startslice-1:endslice-1]
+        print "Sequence identity or matches     :",
+        print read_aln_file(aln)[4][startslice-1:endslice-1].lstrip()
         exitslice=raw_input("Press [enter] to display the menu again or E to select other segment: ")
         if exitslice==" ":
                 menu()
@@ -188,15 +189,15 @@ def glycosig(aln):
                         if aa=="TAG" or aa=="TAA" or aa=="TGA":
                                 codon="*stop*" 
                         protdict[key]=protdict[key]+codon
-        print protdict 
+                        print protdict 
         
         exitglysig=raw_input("Press enter for menu ")
         if exitglysig==" ":
-                menu()
-        
-        
+                menu()        
 #for option 6
-#def fastaexport():
+def fastaexport(alnfile,):
+        filewrite=open(file,"w+")
+        
 #for option 7
 def exitapp():
         confirm=raw_input("Are you sure you want to exit? Press Y to exit and N to continue ")
@@ -233,19 +234,21 @@ def menu():
                         message="Sequence loaded successfully into memory"
                         read_aln_file(aln)
                 elif option==2:
-                        global aln
+                        #global aln
                         summary(aln)
                 elif option==3:
-                        global aln
+                        #global aln
                         slicer(aln)
                 elif option==4:
-                        global aln
+                        #global aln
                         seqisolate(aln)
                 elif option==5:
-                        global aln
+                        #global aln
                         glycosig(aln)
                 elif option==6:
-                        fastaexport()
+                        global aln
+                        
+                        fastaexport(aln,)
                 elif option==7: 
                         refresh=exitapp()                                
                 else:
