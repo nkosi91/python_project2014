@@ -190,8 +190,10 @@ def glycosig(aln):
                                 codon="*stop*" 
                         protdict[key]=protdict[key]+codon
         for key,val in protdict.items():
+                import re
                 regexobj=re.compile("N[^P][ST]")
-                if regexpobj.findall(val)!=[]:
+                regexobj.findall(val)
+                if regexobj.findall(val)!=[]:
                         print "Glycosylation Signatures found in", key
                         print val
         exitglysig=raw_input("Press enter for menu ")
