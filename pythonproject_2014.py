@@ -91,8 +91,16 @@ def summary(alnfile):
 def slicer(alnfile):
         startslice=input("Enter start position ")
         endslice=input("Enter end position ")
-        print "Segment from", startslice, "to", endslice, "of sequences"
-        
+        print "Segment from", startslice, "to", endslice, "of sequences\n"
+        for k in read_aln_file(aln)[2].keys():
+                print k,
+                n=0
+                while n==0:
+                        for v in read_aln_file(aln)[2][startslice:endslice].values():
+                                print v
+                                n=1
+                
+
         
 
 #for option 4
