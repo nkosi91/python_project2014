@@ -189,14 +189,22 @@ def glycosig(aln):
                         if aa=="TAG" or aa=="TAA" or aa=="TGA":
                                 codon="*stop*" 
                         protdict[key]=protdict[key]+codon
-                        print protdict 
-        
+        print protdict
+        for key,val in protdict.items():
+                if val.match("N"):
+                        print "Glycosylation Signatures found in", key
+                        print val
         exitglysig=raw_input("Press enter for menu ")
         if exitglysig==" ":
-                menu()        
+                menu() 
+        return protdict
 #for option 6
 def fastaexport(alnfile,):
         filewrite=open(file,"w+")
+        filetype=raw_input("Do you want to create Multiple files(one per sequence) press M or press S for a single file that includes all the sequences ")
+        if filetype=="S" or filetype=="S":
+                filewrite.writelines()
+                
         
 #for option 7
 def exitapp():
@@ -244,11 +252,10 @@ def menu():
                         seqisolate(aln)
                 elif option==5:
                         #global aln
+                        import re
                         glycosig(aln)
                 elif option==6:
-                        global aln
-                        
-                        fastaexport(aln,)
+                        fastaexport(aln,protdict)
                 elif option==7: 
                         refresh=exitapp()                                
                 else:
