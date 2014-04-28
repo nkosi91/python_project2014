@@ -12,7 +12,16 @@ def read_aln_file(alnfile):
                                 continue
                         else:
                                 nline=line.strip()#removing "next lines" in the list
-                                seq=seq+[nline]                                              
+                                seq=seq+[nline]
+                matches=""
+                for line in lines:#isolating matches, with their spaces
+                        if line.startswith("CLUSTAL"):
+                                continue
+                        if line.startswith("gi|"):
+                                continue
+                        else:
+                                matches=matches+line
+                                matches=str(matches)
                 store=[]
                 for item in seq:
                         if item=="":#removing the spaces from the list
@@ -49,7 +58,7 @@ def read_aln_file(alnfile):
                                 seqs_only=seqs_only+seqsonly[c]
                         seqs_only=seqs_only.split()
                         seqdict[seqs_only[0]]=seqs_only[1]
-                return (aln,sequencenumber,seqdict,store)
+                return (aln,sequencenumber,seqdict,store,matches)
         else:           
                 message="File might not be a valid fasta file, please enter a valid aln file"
                 refresh=0
@@ -92,13 +101,17 @@ def slicer(alnfile):
         startslice=input("Enter start position ")
         endslice=input("Enter end position ")
         print "Segment from", startslice, "to", endslice, "of sequences\n"
+        n=0
         for k in read_aln_file(aln)[2].keys():
                 print k,
-                n=0
                 while n==0:
-                        for v in read_aln_file(aln)[2][startslice:endslice].values():
+                        for v in read_aln_file(aln)[2].values()[startslice:endslice]:
                                 print v
                                 n=1
+                                for m in read_aln_file(aln)[4][startslice:endslice]:
+                                        while n==1:
+                                                print m
+                                                n=2
                 
 
         
@@ -128,7 +141,7 @@ def seqisolate(alnfile):
         elif exitseqisolate=="i" or exitseqisolate=="I":
                 seqisolate(alnfile)
 #for option 5
-def glycosig(aln):
+#def glycosig(aln):
         
         
 #for option 6
