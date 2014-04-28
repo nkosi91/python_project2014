@@ -49,11 +49,7 @@ def read_aln_file(alnfile):
                                 seqs_only=seqs_only+seqsonly[c]
                         seqs_only=seqs_only.split()
                         seqdict[seqs_only[0]]=seqs_only[1]
-                dashes=0
-                for each in seqdict.values():
-                        dashes=dashes+each.count("-")
-                print dashes
-                return (aln,sequencenumber,seqdict)
+                return (aln,sequencenumber,seqdict,store)
         else:           
                 message="File might not be a valid fasta file, please enter a valid aln file"
                 refresh=0
@@ -73,14 +69,20 @@ def summary(alnfile):
         dashy=0
         for eachasq in read_aln_file(aln)[2].values():
                 for nucleotide in eachsq:
-                        if nucleotide=="C" or nucleotide=="G" or nucleotide=="A" or nucleotide=="T" :
+                        if nucleotide=="C" or nucleotide=="G" or nucleotide=="A" or nucleotide=="T" and nucleotide!="-" :
                                 lengthy=lengthy+1
-                        elif nucleotide=="-":
-                                continue 
                         else:
                                 continue       
-        print "Average Length:",lengthy
-        print "Number of [X] matches]:" 
+        print "Average Length:",lengthy/read_aln_file(aln)[1]
+        stars=0
+        for eachone in read_aln_file(aln)[3]:
+                for one in eachone:
+                        if one=="*":
+                                stars=stars+1
+        print "Number of [X] matches]:"
+        print [read_aln_file(aln)[1]],":", stars
+        for i in range(1, read_aln_file(aln)[1]-1):
+                print [read_aln_file(aln)[1]-i],":"
         
         exitsummary=raw_input("Press ENTER to return to menu ")
         if exitsummary==" ":
