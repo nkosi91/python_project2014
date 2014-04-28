@@ -100,22 +100,16 @@ def summary(alnfile):
 def slicer(alnfile):
         startslice=input("Enter start position ")
         endslice=input("Enter end position ")
-        print "Segment from", startslice, "to", endslice, "of sequences\n"
-        n=0
+        print "Segment from",startslice-1,"to",endslice-1,"of sequences\n"
         for k in read_aln_file(aln)[2].keys():
                 print k,
-                while n==0:
-                        for v in read_aln_file(aln)[2].values()[startslice:endslice]:
-                                print v
-                                n=1
-                                for m in read_aln_file(aln)[4][startslice:endslice]:
-                                        while n==1:
-                                                print m
-                                                n=2
-                
-
-        
-
+                print read_aln_file(aln)[2][k][startslice-1:endslice-1]
+        print read_aln_file(aln)[4][startslice-1:endslice-1]
+        exitslice=raw_input("Press [enter] to display the menu again or E to select other segment: ")
+        if exitslice==" ":
+                menu()
+        if exitslice=="e" or exitslice=="E":
+                slicer(alnfile)
 #for option 4
 def seqisolate(alnfile):
         sequenceid=raw_input("Please enter sequence to analyse: ")
