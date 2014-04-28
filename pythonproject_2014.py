@@ -66,7 +66,6 @@ def summary(alnfile):
                 lengthsq=len(eachsq)
         print "Length:",lengthsq
         lengthy=0
-        dashy=0
         for eachasq in read_aln_file(aln)[2].values():
                 for nucleotide in eachsq:
                         if nucleotide=="C" or nucleotide=="G" or nucleotide=="A" or nucleotide=="T" and nucleotide!="-" :
@@ -83,19 +82,21 @@ def summary(alnfile):
         print [read_aln_file(aln)[1]],":", stars
         for i in range(1, read_aln_file(aln)[1]-1):
                 print [read_aln_file(aln)[1]-i],":"
-        
+        print "Percentage matches:",str(stars*100.0/lengthsq)+"%"
         exitsummary=raw_input("Press ENTER to return to menu ")
         if exitsummary==" ":
                 menu()
         
 #for option 3
+#def slicer(startslice,endslice):
+        
 
 #for option 4
 
 #for option 5
 
 #for option 6
-
+def
 #for option 7
 def exitapp():
         confirm=raw_input("Are you sure you want to exit? Press Y to exit and N to continue ")
@@ -137,7 +138,7 @@ def menu():
                 elif option==3:
                         startslice=input("Enter start position ")
                         endslice=input("Enter end position ")
-                        refresh=slicer()
+                        slicer(startslice,endslice)
                 elif option==4:
                         sequenceid=raw_input("Please enter sequence to analyse ")
                         refresh=seqisolate()
