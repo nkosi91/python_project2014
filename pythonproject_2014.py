@@ -189,7 +189,6 @@ def glycosig(aln):
                         if aa=="TAG" or aa=="TAA" or aa=="TGA":
                                 codon="*stop*" 
                         protdict[key]=protdict[key]+codon
-        print protdict
         for key,val in protdict.items():
                 regexobj=re.compile("N[^P][ST]")
                 if regexpobj.findall(val)!=[]:
@@ -246,13 +245,10 @@ def menu():
                         #global aln
                         summary(aln)
                 elif option==3:
-                        #global aln
                         slicer(aln)
                 elif option==4:
-                        #global aln
                         seqisolate(aln)
                 elif option==5:
-                        #global aln
                         import re
                         glycosig(aln)
                 elif option==6:
